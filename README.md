@@ -1,2 +1,2 @@
 # QtOpenGL
-Qt OpenGLのサンプルコード
+QtでOpenGLを使うサンプルコード
