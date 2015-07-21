@@ -1,4 +1,4 @@
-# QtOpenGL
-QtでOpenGLを使うサンプルコード
+# QtOpenGL (capture)
+QtでOpenGLの表示をキャプチャするテストコード
 
-<http://makefile.sblo.jp/article/149228443.html>
+<http://makefile.sblo.jp/article/154798457.html>

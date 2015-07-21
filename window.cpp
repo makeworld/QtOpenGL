@@ -1,5 +1,7 @@
 #include "window.h"
 
+const qint64 DURATION = 200;
+
 static const GLfloat vertices[] = {
    0.0f, 0.707f, 0.0f,
   -0.5f,  -0.5f, 0.0f,
@@ -13,6 +15,7 @@ static const GLfloat colors[] = {
 
 OpenGLWindow::OpenGLWindow(QWindow *parent)
   : QOpenGLWindow(QOpenGLWindow::NoPartialUpdate, parent)
+  , m_timerCount(1)
 {
 }
 
@@ -53,7 +56,11 @@ void OpenGLWindow::resizeGL(int, int)
 
 void OpenGLWindow::paintGL()
 {
+#if 0
   qint64 t = m_elapsedTimer.isValid() ? m_elapsedTimer.elapsed() : 0;
+#else
+  qint64 t = m_timerCount * 16;
+#endif
 
   glClear(GL_COLOR_BUFFER_BIT);
 
@@ -69,10 +76,21 @@ void OpenGLWindow::paintGL()
 
 void OpenGLWindow::mousePressEvent(QMouseEvent *)
 {
+#if 0
   if(!m_elapsedTimer.isValid()){
     m_elapsedTimer.start();
     startTimer(16);
   }
+#else
+  const QString filename = "capture-%1.png";
+  for(qint64 i = 0; i < DURATION; ++i){
+    context()->makeCurrent(this);
+    glViewport(0, 0, width(), height());
+    paintGL();
+    context()->swapBuffers(this);
+    grabFramebuffer().save(filename.arg(m_timerCount++));
+  }
+#endif
 }
 
 void OpenGLWindow::timerEvent(QTimerEvent *)

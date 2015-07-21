@@ -31,6 +31,7 @@ private:
   int m_matrixLocation;
 
   QElapsedTimer m_elapsedTimer;
+  qint64 m_timerCount;
 };
 
 #endif // WINDOW_H
